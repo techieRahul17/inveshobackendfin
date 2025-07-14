@@ -8,7 +8,8 @@ const vcSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: function (v) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); // Simple regex validation
+                // Basic email regex validation
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
             },
             message: (props) => `${props.value} is not a valid email address!`,
         },
