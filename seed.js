@@ -1,23 +1,51 @@
-const mongoose = require('mongoose');
-const VC = require('./models/VC');
-require('dotenv').config();
-console.log("Rahul");
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected for seeding...'))
-    .catch(err => console.error(err));
-console.log(process.env.MONGO_URI);
+const mongoose = require("mongoose");
+const VC = require("./models/VC");
 
-const sampleVCs = [
-    { name: "Rahul V S", email: "rahul@vcfirm.com", profile: "Automotive VC", industries: ["automotive", "transport"] },
-    { name: "Anjali", email: "anjali@fintechvc.com", profile: "Fintech VC focused on startups", industries: ["fintech", "banking"] },
-    { name: "Balamurugan", email: "bala@fashionventures.com", profile: "Fashion industry specialist", industries: ["fashion", "retail"] }
-];
+mongoose.connect(process.env.MONGO_URI).then(async () => {
+    console.log("Connected to MongoDB");
 
-async function seedDB() {
-    await VC.deleteMany({});
-    await VC.insertMany(sampleVCs);
-    console.log('✅ Database seeded!');
-    mongoose.connection.close();
-}
+    await VC.deleteMany({}); // Clean DB before seeding
 
-seedDB();
+    const vcs = [
+        {
+            name: "Sophia Turner",
+            industry: "Fintech",
+            profile: "Specializes in seed funding for Fintech startups.",
+            email: "sophia.turner@vcgroup.com",
+        },
+        {
+            name: "Rajesh Mehra",
+            industry: "Healthcare",
+            profile: "Investor in health-tech and medical devices companies.",
+            email: "rajesh.mehra@healthvc.in",
+        },
+        {
+            name: "Emily Zhang",
+            industry: "Automotive",
+            profile: "Focused on autonomous vehicles and EVs.",
+            email: "emily.zhang@autovc.com",
+        },
+        {
+            name: "Daniel Ross",
+            industry: "Fashion",
+            profile: "Supports sustainable fashion initiatives worldwide.",
+            email: "daniel.ross@fashioncapital.com",
+        },
+        {
+            name: "Anita Desai",
+            industry: "EdTech",
+            profile: "Angel investor for e-learning and education tech.",
+            email: "anita.desai@learnfund.org",
+        },
+        {
+            name: "Omar Khalid",
+            industry: "AI/ML",
+            profile: "Funds startups leveraging AI for enterprise software.",
+            email: "omar.khalid@aimlventures.io",
+        },
+    ];
+
+    await VC.insertMany(vcs);
+    console.log("VC data seeded successfully!");
+    process.exit();
+});
